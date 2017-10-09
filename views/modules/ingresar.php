@@ -13,11 +13,10 @@
 <?php
   if (isset($_GET['action'])) {
     if ($_GET['action'] === 'fallo') {
-      echo "Fallo al ingresar";
+      echo 'Fallo al ingresar';
     }
   }
 
-
   $ingreso = new MvcController();
-  $ingreso -> ingresoUsuarioControler();
+  $ingreso -> ingresoUsuarioController();
 ?>

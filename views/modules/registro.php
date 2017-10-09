@@ -14,11 +14,11 @@
 
 <?php
   $registro = new MvcController();
-  $registro -> registroUsuarioControler();
+  $registro -> registroUsuarioController();
 
    if (isset($_GET['action'])) {
      if ($_GET['action'] === 'ok') {
-       echo "Registro Existoso";
+       echo 'Registro Existoso';
      }
    }
 ?>
