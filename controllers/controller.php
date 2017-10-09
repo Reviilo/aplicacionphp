@@ -1,4 +1,5 @@
 <?php
+  require_once "controllers/crypt.php";
 
   class MvcController {
 
@@ -28,19 +29,29 @@
 
       if (isset($_POST['user'])) {
 
-        # recive por el metodo post 3 datos
-        $datos = array(
-          'user' => $_POST['user'],
-          'password' => $_POST['password'],
-          'email' => $_POST['email']
-        );
+        $validador = preg_match('/^[A-Za-z0-9]+$/', $_POST['user']) &&
+                    preg_match('/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/', $_POST['password']) &&
+                    filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && preg_match('/@.+\./', $_POST['email']);
 
-        $respuesta = Datos::registroUsuarioModel($datos, 'usuarios');
+        $conEnctriptada = encriptar($_POST['password']);
 
-        if ($respuesta) {
-          header('Location: index.php?action=ok', false);
-        } else {
-          header('Location: index.php', false);
+        if ($validador) {
+          # recive por el metodo post 3 datos'
+          $datos = array(
+            'user' => $_POST['user'],
+            'password' => $conEnctriptada,
+            'email' => $_POST['email']
+          );
+
+          $respuesta = Datos::registroUsuarioModel($datos, 'usuarios');
+
+          echo $respuesta;
+
+          if ($respuesta) {
+            header('Location: index.php?action=ok', false);
+          } else {
+            header('Location: index.php', false);
+          }
         }
       }
     }
@@ -51,29 +62,37 @@
 
       if (isset($_POST['user'])) {
 
-        $datos = array(
-          'user' => $_POST['user'],
-          'password' => $_POST['password']
-        );
+        $validador = preg_match('/^[A-Za-z0-9]+$/', $_POST['user']) &&
+                    preg_match('/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/', $_POST['password']);
 
-        $respuesta = Datos::ingresoUsuarioModel($datos, 'usuarios');
+        if ($validador) {
+          $datos = array(
+            'user' => $_POST['user'],
+            'password' => $_POST['password']
+          );
 
-        # var_dump($respuesta);
-        $verificacionRespuesta = $respuesta['user'] === $datos['user'] && $respuesta['password'] === $datos['password'];
+          $user = $_POST['user'];
 
-        if ($verificacionRespuesta) {
-          session_start();
-          $_SESSION['validar'] = true;
+          $respuesta = Datos::ingresoUsuarioModel($datos['user'], 'usuarios');
 
-          header('location: index.php?action=usuarios');
+          $verificarContraseña = password_verify($datos['password'], $respuesta['password']);
 
-        } else {
-          header('location: index.php?action=fallo');
+          $verificacionRespuesta = $respuesta['user'] === $datos['user'] && $verificarContraseña;
+
+          if ($verificacionRespuesta) {
+            session_start();
+            $_SESSION['validar'] = true;
+
+            header('location: index.php?action=usuarios');
+
+          } else {
+            header('location: index.php?action=fallo');
+          }
         }
       }
     }
 
-    #REGISTRO DE USUARIO
+    # LISTA DE USUARIOS
     #-------------------------------------
     static public function vistaUsuariosController () {
 
@@ -121,11 +140,29 @@
         echo '
           <input type="hidden" value="'.$respuesta['id'].'" name="id">
 
-          <input type="text" value="'.$respuesta['user'].'" name="user" required>
+          <label for="user">
+            Usuario:
+            <input type="text" value="'.$respuesta['user'].'" name="user" id="user" required>
+          </label>
 
-          <input type="text" value="'.$respuesta['password'].'" name="password" required>
+          <label for="password">
+            Contraseña:
+            <div class="informacion-password">
+        			<span class="icon-info icon-password">info</span>
+        			<div class="info-content-password">
+        				<p>La contraseña debe tener almenos 6 caracteres </p>
+        				<p>Debe tener al menos una mayuscula</p>
+        				<p>Debe tener al menos una minuscula</p>
+        				<p>Debe tener al menos un numero</p>
+        			</div>
+        		</div>
+            <input type="text" value="'.$respuesta['password'].'" name="password" id="password" required>
+          </label>
 
-          <input type="email" value="'.$respuesta['email'].'" name="email" required>
+          <label for="email">
+            Correo:
+            <input type="email" value="'.$respuesta['email'].'" name="email" id="email" required>
+          </label>
 
           <input type="submit" value="Actualizar">
         ';
@@ -138,19 +175,27 @@
 
       if (isset($_POST['user'])) {
 
-        $datos = array(
-          'id' => $_POST['id'],
-          'user' => $_POST['user'],
-          'password' => $_POST['password'],
-          'email' => $_POST['email']
-        );
+        $validador = preg_match('/^[A-Za-z0-9]+$/', $_POST['user']) &&
+                    preg_match('/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/', $_POST['password']) &&
+                    filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && preg_match('/@.+\./', $_POST['email']);
 
-        $respuesta = Datos::actualizarUsuarioModel($datos, 'usuarios');
+        $conEnctriptada = encriptar($_POST['password']);
 
-        if ($respuesta) {
-          header('Location: index.php?action=cambio', false);
-        } else {
-          echo "Sucedio un problema al actualizar los datos";
+        if (validador) {
+          $datos = array(
+            'id' => $_POST['id'],
+            'user' => $_POST['user'],
+            'password' => $conEnctriptada,
+            'email' => $_POST['email']
+          );
+
+          $respuesta = Datos::actualizarUsuarioModel($datos, 'usuarios');
+
+          if ($respuesta) {
+            header('Location: index.php?action=cambio', false);
+          } else {
+            echo "Sucedio un problema al actualizar los datos";
+          }
         }
       }
     }

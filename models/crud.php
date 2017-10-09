@@ -33,13 +33,13 @@
 
     # INGRESO DE USUARIO
     #--------------------------------------
-    static public function ingresoUsuarioModel ($datos, $tabla) {
+    static public function ingresoUsuarioModel ($user, $tabla) {
 
       $stmt = Conexion::conectar()->prepare(
         "SELECT user, password FROM $tabla WHERE user = :user"
       );
 
-      $stmt -> bindParam(':user', $datos['user'], PDO::PARAM_STR);
+      $stmt -> bindParam(':user', $user, PDO::PARAM_STR);
 
       $stmt -> execute();
 

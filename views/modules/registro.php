@@ -1,14 +1,14 @@
 <h1>REGISTRO DE USUARIO</h1>
 
-<form method="post" onsubmit="return validarRegistro()">
+<form method="post" onsubmit="return validacion()">
 
 	<label for="user">
-		User
+		Usuario:
 		<input type="text" placeholder="Usuario" name="user" id="user" required>
 	</label>
 
 	<label for="password">
-		Password
+		Contraseña:
 		<div class="informacion-password">
 			<span class="icon-info icon-password">info</span>
 			<div class="info-content-password">
@@ -16,14 +16,13 @@
 				<p>Debe tener al menos una mayuscula</p>
 				<p>Debe tener al menos una minuscula</p>
 				<p>Debe tener al menos un numero</p>
-				<p>Debe tener al menos un caracter especial</p>
 			</div>
 		</div>
 		<input type="password" placeholder="Contraseña" name="password" id="password" required>
 	</label>
 
 	<label for="email">
-		Email
+		Correo:
 		<input type="email" placeholder="Email" name="email" id="email" required>
 	</label>
 
@@ -41,9 +40,9 @@
   $registro = new MvcController();
   $registro -> registroUsuarioController();
 
-   if (isset($_GET['action'])) {
-     if ($_GET['action'] === 'ok') {
-       echo 'Registro Existoso';
-     }
-   }
+	if (isset($_GET['action'])) {
+		if ($_GET['action'] === 'ok') {
+			echo 'Registro Existoso';
+		}
+	}
 ?>

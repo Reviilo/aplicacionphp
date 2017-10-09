@@ -83,6 +83,12 @@ table tbody tr td {
   padding: 10px;
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+  width: auto;
+}
+
 /* Registro Informacion Password */
 
 .informacion-password {

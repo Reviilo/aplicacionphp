@@ -23,7 +23,7 @@
        ?>
     </section>
 
-    <script src="views/js/validarRegistro.js" charset="utf-8"></script>
+    <script src="views/js/validador.js" charset="utf-8"></script>
   </body>
 
 </html>

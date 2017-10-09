@@ -9,7 +9,7 @@
 
 <h1>EDITAR USUARIO</h1>
 
-<form method="post" >
+<form method="post" onsubmit="return validacion()">
 
 	<?php
 		$mvc = new MvcController();
