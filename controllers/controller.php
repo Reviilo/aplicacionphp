@@ -95,7 +95,7 @@
   				<td>'.$item["password"].'</td>
   				<td>'.$item["email"].'</td>
   				<td><a href="index.php?action=editar&id='.$item["id"].'" ><button>Editar</button></a></td>
-  				<td><button>Borrar</button></td>
+          <td><a href="index.php?action=usuarios&id='.$item["id"].'" ><button>Borrar</button></a></td>
   			</tr>';
 
         # <tr>
@@ -151,6 +151,24 @@
           header('Location: index.php?action=cambio', false);
         } else {
           echo "Sucedio un problema al actualizar los datos";
+        }
+      }
+    }
+
+  # BORRAR USUARIO
+  #-------------------------------------
+    static public function borrarUsuarioController () {
+
+      if (isset($_GET['id'])) {
+
+        $id = $_GET['id'];
+
+        $respuesta = Datos::borrarUsuarioModel($id, 'usuarios');
+
+        if ($respuesta) {
+          header('Location: index.php?action=usuarios');
+        } else {
+          echo "Ha surgido un problema";
         }
       }
     }

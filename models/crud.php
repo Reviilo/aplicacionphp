@@ -89,7 +89,7 @@
         "UPDATE $tabla SET user=:user, password=:password, email=:email WHERE id=:id"
       );
 
-      $stmt -> bindParam(':id', $datos['id'], PDO::PARAM_STR);
+      $stmt -> bindParam(':id', $datos['id'], PDO::PARAM_INT);
       $stmt -> bindParam(':user', $datos['user'], PDO::PARAM_STR);
       $stmt -> bindParam(':password', $datos['password'], PDO::PARAM_STR);
       $stmt -> bindParam(':email', $datos['email'], PDO::PARAM_STR);
@@ -101,6 +101,20 @@
       // } else {
       //   return 'error';
       // }
+
+      $stmt -> close();
+    }
+
+    # BORRAR USUARIO
+    #-------------------------------------
+    static public function borrarUsuarioModel ($id, $tabla) {
+      $stmt = Conexion::conectar() -> prepare(
+        "DELETE FROM $tabla WHERE id=:id"
+      );
+
+      $stmt -> bindParam(':id', $id, PDO::PARAM_INT);
+
+      return $stmt -> execute();
 
       $stmt -> close();
     }

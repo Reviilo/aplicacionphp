@@ -23,6 +23,7 @@
     <?php
       $mvc = new MvcController();
       $mvc -> vistaUsuariosController();
+			$mvc -> borrarUsuarioController();
     ?>
 	</tbody>
 </table>
