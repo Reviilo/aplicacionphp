@@ -1,0 +1,117 @@
+/*
+  font-family: 'Rye', cursive;
+  font-family: 'Playfair Display', serif;
+*/
+
+* {
+  font-family: 'Playfair Display', serif;
+}
+
+nav {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: auto;
+  background: black;
+}
+
+nav ul {
+  position: relative;
+  margin: auto;
+  width: 60%;
+  text-align: center;
+  padding-left: 25px;
+}
+
+nav ul li {
+  display: inline-block;
+  width: 24.2%;
+  line-height: 50px;
+  list-style: none;
+}
+
+nav ul li a {
+  font-family: 'Rye', cursive;
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  position: relative;
+  margin: auto;
+  width: 400px;
+}
+
+section h1 {
+  position: relative;
+  margin: 10px auto 20px;
+  padding: 10px;
+  text-align: center;
+  font-weight: 800;
+
+}
+
+section form {
+  position: relative;
+}
+
+section form input {
+  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0 20px;
+}
+
+section form input[type="submit"] {
+  position: relative;
+  margin: 20px auto;
+  left: 4.5%;
+}
+
+table {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  left: -10%;
+}
+
+table thead tr th {
+  padding: 10px;
+}
+
+table tbody tr td {
+  padding: 10px;
+}
+
+/* Registro Informacion Password */
+
+.informacion-password {
+  display: inline-block;
+}
+
+.icon-password {
+  font-size: 0;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+
+.icon-password::before {
+  font-size: 16px;
+}
+
+.info-content-password {
+  display: none;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+  padding: 15px 25px;
+  box-shadow: 0px 1px 20px 1px #c5c1c1;
+  -webkit-box-shadow: 0px 1px 20px 1px #c5c1c1;
+  -moz-box-shadow: 0px 1px 20px 1px #c5c1c1;
+  border-radius: 5px;
+}
+
+.informacion-password:hover .info-content-password {
+  display: block;
+}
