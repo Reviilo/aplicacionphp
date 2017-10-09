@@ -36,7 +36,7 @@
     static public function ingresoUsuarioModel ($user, $tabla) {
 
       $stmt = Conexion::conectar()->prepare(
-        "SELECT user, password FROM $tabla WHERE user = :user"
+        "SELECT user, password, intentos FROM $tabla WHERE user = :user"
       );
 
       $stmt -> bindParam(':user', $user, PDO::PARAM_STR);
@@ -96,12 +96,6 @@
 
       return $stmt -> execute();
 
-      // if ($stmt -> execute()) {
-      //   return 'success';
-      // } else {
-      //   return 'error';
-      // }
-
       $stmt -> close();
     }
 
@@ -113,6 +107,21 @@
       );
 
       $stmt -> bindParam(':id', $id, PDO::PARAM_INT);
+
+      return $stmt -> execute();
+
+      $stmt -> close();
+    }
+
+    # ACTUALIZAR INTENTOS DE INGRESO USUARIO
+    #-------------------------------------
+    static public function actualizarIntentoModel ($datos, $tabla) {
+      $stmt = Conexion::conectar() -> prepare(
+        "UPDATE $tabla SET intentos=:intentos WHERE user=:user"
+      );
+
+      $stmt -> bindParam(':user', $datos['user'], PDO::PARAM_STR);
+      $stmt -> bindParam(':intentos', $datos['intentos'], PDO::PARAM_INT);
 
       return $stmt -> execute();
 

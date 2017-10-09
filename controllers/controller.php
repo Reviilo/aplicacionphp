@@ -79,14 +79,34 @@
 
           $verificacionRespuesta = $respuesta['user'] === $datos['user'] && $verificarContraseña;
 
-          if ($verificacionRespuesta) {
-            session_start();
-            $_SESSION['validar'] = true;
+          $intentosUsuario = $respuesta['intentos'];
 
-            header('location: index.php?action=usuarios');
+          if ($intentosUsuario < 2) {
 
+            if ($verificacionRespuesta) {
+              session_start();
+              $_SESSION['validar'] = true;
+
+              $intentosUsuario = 0;
+              $datosIntento = array(
+                'user' => $datos['user'],
+                'intentos' => $intentosUsuario
+              );
+              $respuestaIntentos = Datos::actualizarIntentoModel($intentos, 'usuarios');
+
+              header('location: index.php?action=usuarios');
+
+            } else {
+              ++$intentosUsuario;
+              $datosIntento = array(
+                'user' => $datos['user'],
+                'intentos' => $intentosUsuario
+              );
+              $respuestaIntentos = Datos::actualizarIntentoModel($datosIntento, 'usuarios');
+              echo 'No coinciden los datos, porfavor intentelo de nuevo';
+            }
           } else {
-            header('location: index.php?action=fallo');
+            header('location: index.php?action=falloDeIntentos&error=intentos');
           }
         }
       }

@@ -19,7 +19,13 @@
 <?php
   if (isset($_GET['action'])) {
     if ($_GET['action'] === 'fallo') {
-      echo 'Fallo al ingresar';
+      echo 'Fallo al ingresar, vuelvalo a intentar';
+    }
+  }
+
+  if (isset($_GET['action'])) {
+    if ($_GET['action'] === 'falloDeIntentos') {
+      echo 'Compruebe que no es un robot, toquese la nariz con el dedo gordo del pie';
     }
   }
 
