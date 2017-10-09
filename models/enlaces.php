@@ -1,9 +1,10 @@
 <?php
 
-class Paginas{
+class Paginas {
 
-	static public function enlacesPaginasModel($enlaces){
+	static public function enlacesPaginasModel ($enlaces) {
 
+    $rutas = explode('/', );
 
 		if ($enlaces === "ingresar" || $enlaces === "usuarios" || $enlaces === "editar" || $enlaces === "salir") {
 

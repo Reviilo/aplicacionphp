@@ -48,7 +48,7 @@
           echo $respuesta;
 
           if ($respuesta) {
-            header('Location: index.php?action=ok', false);
+            header('Location: ok', false);
           } else {
             header('Location: index.php', false);
           }
@@ -106,7 +106,7 @@
               echo 'No coinciden los datos, porfavor intentelo de nuevo';
             }
           } else {
-            header('location: index.php?action=falloDeIntentos&error=intentos');
+            header('location: falloDeIntentos');
           }
         }
       }
