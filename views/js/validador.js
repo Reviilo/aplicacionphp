@@ -89,3 +89,42 @@ function crearParrafo (texto) {
 }
 
  /** FIN CREAR ELEMENTO **/
+
+
+ /** -------------------
+  * VALIDACION DE USUARIO EXISTENTE AJAX
+  * -------------------- */
+
+$('#user').change(
+  function () {
+    var usuario = $('#user').val();
+    var datos = new FormData();
+
+    datos.append('validarUsuario', usuario);
+
+    $.ajax({
+      url: 'views/modules/ajax.php',
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (respuesta) {
+        console.log(respuesta);
+      }
+    });
+
+  //   var xhttp = new XMLHttpRequest();
+  //   xhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     var respuesta this.responseText;
+  //     console.log(respuesta);
+  //   }
+  // };
+  // xhttp.open("POST", datos, true);
+  // xhttp.send();
+
+  }
+);
+
+/** FIN VALIDACION DE USUARIO EXISTENTE AJAX **/

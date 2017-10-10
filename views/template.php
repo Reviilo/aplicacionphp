@@ -22,7 +22,7 @@
 
        ?>
     </section>
-
+    <script src="views/js/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="views/js/validador.js" charset="utf-8"></script>
   </body>
 
