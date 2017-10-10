@@ -13,7 +13,11 @@
   	#-------------------------------------
   	static public function enlacesPaginasController () {
   		if(isset( $_GET['action'])){
-  			$enlaces = $_GET['action'];
+  			// $enlaces = $_GET['action'];
+
+        $datosEnlaces = explode('/', $_GET['action']);
+        $enlaces = $datosEnlaces[0];
+
   		} else{
   			$enlaces = "index";
   		}
@@ -133,8 +137,8 @@
   				<td>'.$item["user"].'</td>
   				<td>'.$item["password"].'</td>
   				<td>'.$item["email"].'</td>
-  				<td><a href="index.php?action=editar&id='.$item["id"].'" ><button>Editar</button></a></td>
-          <td><a href="index.php?action=usuarios&id='.$item["id"].'" ><button>Borrar</button></a></td>
+  				<td><a href="editar/'.$item["id"].'" ><button>Editar</button></a></td>
+          <td><a href="usuarios/'.$item["id"].'" ><button>Borrar</button></a></td>
   			</tr>';
 
         # <tr>
@@ -150,10 +154,10 @@
     # EDITAR USUARIO
     #-------------------------------------
     static public function editarUsuarioController () {
-
-      if (isset($_GET['id'])) {
-
-        $id = $_GET['id'];
+        $datos = explode('/', $_GET['action']);
+        
+        // $id = $_GET['id'];
+        $id = $datos[1];
 
         $respuesta = Datos::editarUsuarioModel($id, 'usuarios');
 
@@ -186,7 +190,6 @@
 
           <input type="submit" value="Actualizar">
         ';
-      }
     }
 
     # ACTUALIZAR USUARIO
@@ -212,7 +215,7 @@
           $respuesta = Datos::actualizarUsuarioModel($datos, 'usuarios');
 
           if ($respuesta) {
-            header('Location: index.php?action=cambio', false);
+            header('Location: cambio', false);
           } else {
             echo "Sucedio un problema al actualizar los datos";
           }
@@ -231,7 +234,7 @@
         $respuesta = Datos::borrarUsuarioModel($id, 'usuarios');
 
         if ($respuesta) {
-          header('Location: index.php?action=usuarios');
+          header('Location: usuarios');
         } else {
           echo "Ha surgido un problema";
         }

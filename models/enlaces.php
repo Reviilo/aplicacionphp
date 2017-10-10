@@ -4,8 +4,6 @@ class Paginas {
 
 	static public function enlacesPaginasModel ($enlaces) {
 
-    $rutas = explode('/', );
-
 		if ($enlaces === "ingresar" || $enlaces === "usuarios" || $enlaces === "editar" || $enlaces === "salir") {
 
 			$module =  "views/modules/".$enlaces.".php";
