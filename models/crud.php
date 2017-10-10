@@ -127,6 +127,40 @@
 
       $stmt -> close();
     }
+
+    #  VALIDAR SI EXISTE EL USUARIO
+    #-------------------------------------
+    static public function validarUsuarioModel ($user, $tabla) {
+      $stmt = Conexion::conectar()->prepare(
+        "SELECT user FROM $tabla WHERE user = :user"
+      );
+
+      $stmt -> bindParam(':user', $user, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      # Obitiene la fila que se esta pidiendo
+      return $stmt -> fetch();
+
+      $stmt -> close();
+    }
+
+    #  VALIDAR SI EXISTE EL EMAIL
+    #-------------------------------------
+    static public function validarEmailModel ($email, $tabla) {
+      $stmt = Conexion::conectar()->prepare(
+        "SELECT email FROM $tabla WHERE email = :email"
+      );
+
+      $stmt -> bindParam(':email', $email, PDO::PARAM_STR);
+
+      $stmt -> execute();
+
+      # Obitiene la fila que se esta pidiendo
+      return $stmt -> fetch();
+
+      $stmt -> close();
+    }
   }
   # $a = new Conexion();
   # $a -> conectar();

@@ -1,7 +1,16 @@
 <?php
-  require_once "controllers/crypt.php";
-
   class MvcController {
+
+    private function encriptar ($dato) {
+
+      $salt = '$2y$14$';
+      for ($i = 0; $i < 22; $i++) {
+      $salt .= substr('./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', mt_rand(0, 63), 1);
+      }
+      $salt .= '$';
+
+      return crypt($dato, $salt);
+    }
 
   	#LLAMADA A LA PLANTILLA
   	#-------------------------------------
@@ -12,13 +21,13 @@
   	#ENLACES
   	#-------------------------------------
   	static public function enlacesPaginasController () {
-  		if(isset( $_GET['action'])){
+  		if (isset( $_GET['action'])) {
   			// $enlaces = $_GET['action'];
 
         $datosEnlaces = explode('/', $_GET['action']);
         $enlaces = $datosEnlaces[0];
 
-  		} else{
+  		} else {
   			$enlaces = "index";
   		}
 
@@ -37,7 +46,7 @@
                     preg_match('/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/', $_POST['password']) &&
                     filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && preg_match('/@.+\./', $_POST['email']);
 
-        $conEnctriptada = encriptar($_POST['password']);
+        $conEnctriptada = self::encriptar($_POST['password']);
 
         if ($validador) {
           # recive por el metodo post 3 datos'
@@ -155,7 +164,7 @@
     #-------------------------------------
     static public function editarUsuarioController () {
         $datos = explode('/', $_GET['action']);
-        
+
         // $id = $_GET['id'];
         $id = $datos[1];
 
@@ -223,8 +232,8 @@
       }
     }
 
-  # BORRAR USUARIO
-  #-------------------------------------
+    # BORRAR USUARIO
+    #-------------------------------------
     static public function borrarUsuarioController () {
 
       if (isset($_GET['id'])) {
@@ -238,6 +247,36 @@
         } else {
           echo "Ha surgido un problema";
         }
+      }
+    }
+
+    # VALIDAR SI EXISTE EL USUARIO
+    #-------------------------------------
+    static public function validarUsuarioController ($dato) {
+      if (preg_match('/^[A-Za-z0-9]+$/', $dato)) {
+        $respuesta = Datos::validarUsuarioModel($dato, 'usuarios');
+
+        if (count($respuesta['user']) > 0) {
+          echo 0;
+        } else {
+          echo 1;
+        }
+
+      }
+    }
+
+    # VALIDAR SI EXISTE EL EMAIL
+    #-------------------------------------
+    static public function validarEmailController ($dato) {
+      if (filter_var($dato, FILTER_VALIDATE_EMAIL) && preg_match('/@.+\./', $dato)) {
+        $respuesta = Datos::validarEmailModel($dato, 'usuarios');
+
+        if (count($respuesta['email']) > 0) {
+          echo 0;
+        } else {
+          echo 1;
+        }
+
       }
     }
 

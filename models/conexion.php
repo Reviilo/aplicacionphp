@@ -6,7 +6,7 @@
       # Crear un nuevo objeto PDO
       # tiene tres parametros
 
-      $link = new PDO('mysql:host=localhost;dbname=aplicacionphp','ruta','');
+      $link = new PDO('mysql:host=localhost;dbname=aplicacionphp','root','');
       # var_dump($link);
 
       return $link;

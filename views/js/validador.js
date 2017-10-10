@@ -28,6 +28,10 @@ function validacion () {
 
       return false;
     }
+
+    if (!usuarioExistente) {
+      return false;
+    }
   }
 
   /* Validacion de la contraseña */
@@ -56,6 +60,10 @@ function validacion () {
 
       return false;
     }
+
+    if (!emailExistente) {
+      return false;
+    }
   }
 
   /* Validacion de terminos y condiciones */
@@ -82,6 +90,7 @@ function validacion () {
 function crearParrafo (texto) {
 
   var p = document.createElement('p');
+  p.className = 'error';
   var message = texto;
   p.innerText = message;
 
@@ -89,7 +98,6 @@ function crearParrafo (texto) {
 }
 
  /** FIN CREAR ELEMENTO **/
-
 
  /** -------------------
   * VALIDACION DE USUARIO EXISTENTE AJAX
@@ -110,7 +118,19 @@ $('#user').change(
       contentType: false,
       processData: false,
       success: function (respuesta) {
-        console.log(respuesta);
+        var userElement = document.querySelector('#user');
+        respuesta = parseInt(respuesta);
+        if (respuesta === 0) {
+          var message = 'Usuario no Disponible';
+          var p = crearParrafo(message);
+          userElement.parentElement.appendChild(p);
+          usuarioExistente = true;
+        } else {
+          var message = 'Usuario Disponible';
+          var p = crearParrafo(message);
+          userElement.parentElement.appendChild(p);
+          usuarioExistente = false;
+        }
       }
     });
 
@@ -125,6 +145,56 @@ $('#user').change(
   // xhttp.send();
 
   }
+);
+
+/** FIN VALIDACION DE USUARIO EXISTENTE AJAX **/
+
+/** -------------------
+ * VALIDACION DE USUARIO EXISTENTE AJAX
+ * -------------------- */
+
+$('#email').change(
+ function () {
+   var usuario = $('#email').val();
+   var datos = new FormData();
+
+   datos.append('validarEmail', usuario);
+
+   $.ajax({
+     url: 'views/modules/ajax.php',
+     method: "POST",
+     data: datos,
+     cache: false,
+     contentType: false,
+     processData: false,
+     success: function (respuesta) {
+       var userElement = document.querySelector('#email');
+       respuesta = parseInt(respuesta);
+       if (respuesta === 0) {
+         var message = 'Este email ya esta Registrado';
+         var p = crearParrafo(message);
+         userElement.parentElement.appendChild(p);
+         emailExistente = true;
+       } else {
+         var message = 'Email Disponible';
+         var p = crearParrafo(message);
+         userElement.parentElement.appendChild(p);
+         emailExistente = false;
+       }
+     }
+   });
+
+ //   var xhttp = new XMLHttpRequest();
+ //   xhttp.onreadystatechange = function() {
+ //   if (this.readyState == 4 && this.status == 200) {
+ //     var respuesta this.responseText;
+ //     console.log(respuesta);
+ //   }
+ // };
+ // xhttp.open("POST", datos, true);
+ // xhttp.send();
+
+ }
 );
 
 /** FIN VALIDACION DE USUARIO EXISTENTE AJAX **/

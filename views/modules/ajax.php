@@ -6,15 +6,22 @@
   class Ajax {
 
     public $validarUsuario;
+    public $validarEmail;
 
-    static public function validarUsuarioAjax () {
-      $datos = $this -> validarUsuario;
+    public function validarUsuarioAjax () {
+      $dato = $this -> validarUsuario;
 
-      // $respuesta = MvcController::validarUsuarioController($datos);
-      //
-      // $echo $respuesta;
+      $respuesta = MvcController::validarUsuarioController($dato);
 
-      echo $datos;
+      echo $respuesta;
+    }
+
+    public function validarEmailAjax () {
+      $dato = $this -> validarEmail;
+
+      $respuesta = MvcController::validarEmailController($dato);
+
+      echo $respuesta;
     }
   }
 
@@ -22,6 +29,12 @@
     $a = new Ajax();
     $a -> validarUsuario = $_POST['validarUsuario'];
     $a -> validarUsuarioAjax();
+  }
+
+  if(isset($_POST['validarEmail'])){
+    $a = new Ajax();
+    $a -> validarEmail = $_POST['validarEmail'];
+    $a -> validarEmailAjax();
   }
 
 ?>
