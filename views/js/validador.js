@@ -29,7 +29,11 @@ function validacion () {
       return false;
     }
 
-    if (!usuarioExistente) {
+    if (usuarioExistente) {
+      var message = 'Usuario existente, pruebe con otro';
+      var p = crearParrafo(message);
+      userElement.parentElement.appendChild(p);
+
       return false;
     }
   }
@@ -61,7 +65,11 @@ function validacion () {
       return false;
     }
 
-    if (!emailExistente) {
+    if (emailExistente) {
+      var message = 'Email existente pruebe con otro';
+      var p = crearParrafo(message);
+      emailElement.parentElement.appendChild(p);
+
       return false;
     }
   }
